@@ -9,28 +9,33 @@
     "lint": "next lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
     "check": "prettier --check \"**/*.{ts,tsx,js,jsx,md,mdx,css,yaml,yml}\"",
+    "lint-staged": "lint-staged",
     "prepare": "husky && husky install"
   },
   "dependencies": {
-    "lint-staged": "^15.2.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.18",
     "next": "14.2.3",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-icons": "^5.2.1"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
-    "eslint-config-next": "14.2.3",
+    "eslint-config-next": "^14.2.3",
     "husky": "^8.0.0",
+    "lint-staged": "^15.2.2",
     "postcss": "^8",
     "prettier": "^3.2.5",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
   "lint-staged": {
-    "{src,apps,libs,test}/**/*.ts": "eslint",
+    "{src,apps,libs,test}/**/*.ts": "lint",
     "{src,test}/**/*.{ts}": "prettier --write"
   }
 }

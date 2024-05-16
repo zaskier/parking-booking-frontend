@@ -18,6 +18,8 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+  font-family: Inter;
+  font-weight: 300;
   background: linear-gradient(
       to bottom,
       transparent,
@@ -30,4 +32,10 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.footer {
+  background-color: #3f3d56;
+  padding: 20px;
+  text-align: center;
 }
