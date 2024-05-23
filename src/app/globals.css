@@ -17,15 +17,10 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
+  color: #3f3d56;
   font-family: Inter;
   font-weight: 300;
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: white;
 }
 
 @layer utilities {
@@ -34,8 +29,29 @@ body {
   }
 }
 
-.footer {
-  background-color: #3f3d56;
+.footer-layout {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.navbar-logo {
   padding: 20px;
-  text-align: center;
+  color: #3f3d56;
+  font-weight: 400;
+  font-family: Inter;
+  display: flex;
+  align-items: center;
+  font-size: 48px;
+}
+
+.dropDownProfile {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 120px;
+  padding: 20px;
+  border-radius: 1px;
+  background-color: white;
+  border: 1px solid gray;
 }
