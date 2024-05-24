@@ -31,7 +31,7 @@ const Footer = () => {
               <Link href="/about" className="mr-auto">
                 About us
               </Link>{" "}
-              <Link href="#">Privacy Policy</Link>
+              <Link href="/privacy-policy">Privacy Policy</Link>
               <Link href="#">Terms & Conditions</Link>
               <Link href="#">FAQ</Link>
               <h3 className="text-base mb-2 font-bold ">Follow Us</h3>

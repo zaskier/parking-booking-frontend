@@ -55,3 +55,10 @@ body {
   background-color: white;
   border: 1px solid gray;
 }
+
+.container {
+  display: grid;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: center;
+}
