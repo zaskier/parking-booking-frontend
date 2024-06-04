@@ -1,8 +1,15 @@
+"use client"
 import Image from "next/image";
 import findAddOffer from "./find-add-offer.svg";
-//import DatePicker from 'react-datepicker'
+import Dropdown from "@/components/Homepage/Dropdown";
 
 export default function Home() {
+  const options = ['Guarded', 'Monitored', 'Any'];
+  const handleSelect = (option: string) => {
+    console.log('Parking type:', option);
+  };
+
+
   return (
 <div className="  flex flex-row Parent bg-main-gray bg-center bg-no-repeat rounded-lg w-full content-background p-4 "
     style={{ backgroundImage: `url("/path/to/your/image.jpg")`}}>
@@ -24,16 +31,11 @@ export default function Home() {
         className="w-full px-4 py-4 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 m-3 bg-main-gray "
         placeholder="Where"
       />
-      <input
-        type="text"
-        className="w-full px-4 py-4 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 m-3 bg-main-gray "
-        placeholder="Parking type"
-        readOnly // This prevents users from typing in the field
-      />
-      <div className="flex flex-row m-4 w-full m-3 "  >    
+      <Dropdown  label="Parking Type" options={options} onSelect={handleSelect} />
+          <div className="flex flex-row m-4 w-full m-3 "  >    
         <input
           type="text"
-          className="w-full px-4 py-4 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-main-gray mr-3"
+          className="w-full px-4 py-4 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 mr-3 bg-main-gray "
           placeholder="Select dates"
           readOnly // This prevents users from typing in the field
         />  
@@ -45,12 +47,6 @@ export default function Home() {
         </button>    
       </div>
       </div>
-      {/* <DatePicker
-        className="w-full rounded-md border border-gray-300 py-2 px-4 focus:outline-none focus:ring-1 focus:ring-blue-500"
-        selected={}
-        onSelect={}
-      /> */}
-    
   </section>
         <Image className="section-2  inset-0 w-1/2  sm:w-1/16 z-10 p-10 opacity-100 md:visible sm:invisible"
         src={findAddOffer}
