@@ -1,44 +1,61 @@
+import Image from "next/image";
+import findAddOffer from "./find-add-offer.svg";
+//import DatePicker from 'react-datepicker'
+
 export default function Home() {
   return (
-    <h1>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dictum,
-      nisl a sollicitudin tempor, sapien dui mattis nisl, egestas consectetur
-      nisl est sit amet nunc. Cras tempus sem in risus convallis, non mattis est
-      dignissim. Vivamus nisi erat, fermentum vitae aliquet a, fringilla in
-      justo. Curabitur ornare dolor vitae sapien commodo commodo vitae et
-      sapien. Orci varius natoque penatibus et magnis dis parturient montes,
-      nascetur ridiculus mus. Suspendisse finibus, mi eget sagittis tempus, quam
-      tortor condimentum lorem, ac dapibus dui ipsum sed nibh. Nulla cursus, ex
-      a euismod interdum, velit justo maximus ipsum, vitae viverra dolor lacus
-      nec arcu. Vivamus sagittis mollis facilisis. Maecenas ac lacus fermentum,
-      mattis felis quis, fermentum tortor. Aenean pulvinar rutrum leo, at
-      tincidunt odio bibendum ac. Nulla dignissim est vitae felis elementum
-      finibus ac sed enim. Donec viverra, lorem ac congue accumsan, justo massa
-      ultricies lorem, in placerat magna dolor ac lacus. Sed congue urna sed
-      elit porta aliquam. Nam lacinia, elit sed auctor scelerisque, nulla est
-      malesuada erat, vitae pretium ipsum dui pulvinar magna. Curabitur interdum
-      dolor a quam facilisis, vel faucibus ligula feugiat. Pellentesque eu
-      bibendum urna. Maecenas a interdum leo. Vivamus cursus facilisis tellus.
-      In hendrerit, diam non lacinia pretium, nisi tellus hendrerit massa, vel
-      sollicitudin libero elit a dui. Phasellus elit ante, iaculis fringilla
-      auctor at, suscipit id sapien. Nulla nec ullamcorper augue. Vestibulum
-      lectus enim, laoreet ac gravida id, eleifend quis odio. Suspendisse
-      potenti. Quisque tristique, mauris non vestibulum convallis, tellus nibh
-      tristique ipsum, at tincidunt leo lorem ut mauris. Cras mauris sapien,
-      efficitur sit amet ornare in, dictum congue arcu. Proin vel pellentesque
-      quam. Proin laoreet leo sed massa dictum feugiat a quis erat. Maecenas
-      nunc nibh, elementum et accumsan et, finibus eget purus. Aenean ex nunc,
-      sodales ut interdum quis, dapibus molestie turpis. Aliquam accumsan nisl
-      et tincidunt blandit. Curabitur quis enim quam. Curabitur nunc dui,
-      faucibus ut pellentesque nec, commodo vel est. Etiam consequat gravida
-      nunc nec bibendum. Nulla maximus pretium cursus. Proin posuere volutpat
-      odio nec egestas. Sed vel tortor tellus. Quisque finibus vestibulum
-      viverra. Vestibulum at sollicitudin turpis. Vivamus convallis vestibulum
-      quam. Duis id enim elit. Proin vel mollis libero, ut consectetur elit.
-      Fusce diam urna, venenatis ac semper id, luctus id tellus. Aliquam egestas
-      erat dui, eget scelerisque velit semper quis. Pellentesque eget molestie
-      sapien, quis ullamcorper nunc.
-    </h1>
-    // <main className="flex min-h-screen flex-col items-center justify-between p-24"></main>
+<div className="  flex flex-row Parent bg-main-gray bg-center bg-no-repeat rounded-lg w-full content-background p-4 "
+    style={{ backgroundImage: `url("/path/to/your/image.jpg")`}}>
+        <section className="section-1 lm:w-full w-1/2 rounded-lg bg-white  ">
+          {/* <div className="flex flex-row m-4 w-full"  >     */}
+            <ul className="mt-auto flex flex-row text-center dark:border-gray-700 dark:text-gray-400 m-3 w-full whitespace-nowrap pr-1" >
+            <li className="me-2 w-full">
+                <a className="inline-block p-4 rounded-t-lg ">Find Parking</a>
+            </li>
+            <li className="me-2 w-full">
+                <a href="#" aria-current="page" className="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-main-blue dark:text-white w-full">Add Parking Offer</a>
+            </li>
+            </ul>
+          {/* </div> */}
+
+    <div className="pr-8">
+      <input
+        type="text"
+        className="w-full px-4 py-4 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 m-3 bg-main-gray "
+        placeholder="Where"
+      />
+      <input
+        type="text"
+        className="w-full px-4 py-4 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 m-3 bg-main-gray "
+        placeholder="Parking type"
+        readOnly // This prevents users from typing in the field
+      />
+      <div className="flex flex-row m-4 w-full m-3 "  >    
+        <input
+          type="text"
+          className="w-full px-4 py-4 rounded-md focus:outline-none focus:ring-1 focus:ring-blue-500 bg-main-gray mr-3"
+          placeholder="Select dates"
+          readOnly // This prevents users from typing in the field
+        />  
+          <button
+          className="bg-deep-dusk whitespace-nowrap text-white py-4 
+          px-5 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400"
+           >
+          Show offers
+        </button>    
+      </div>
+      </div>
+      {/* <DatePicker
+        className="w-full rounded-md border border-gray-300 py-2 px-4 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        selected={}
+        onSelect={}
+      /> */}
+    
+  </section>
+        <Image className="section-2  inset-0 w-1/2  sm:w-1/16 z-10 p-10 opacity-100 md:visible sm:invisible"
+        src={findAddOffer}
+        alt='checkbox'
+      />
+  </div>
   );
 }

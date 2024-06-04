@@ -18,7 +18,7 @@
 
 body {
   color: #3f3d56;
-  font-family: Inter;
+  font-family: 'Montserrat', sans-serif; 
   font-weight: 300;
   background: white;
 }
@@ -39,7 +39,6 @@ body {
   padding: 20px;
   color: #3f3d56;
   font-weight: 400;
-  font-family: Inter;
   display: flex;
   align-items: center;
   font-size: 48px;

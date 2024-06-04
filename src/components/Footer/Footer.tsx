@@ -6,7 +6,7 @@ import { MdFacebook } from "react-icons/md";
 import { AiFillInstagram, AiFillLinkedin, AiFillYoutube } from "react-icons/ai";
 const Footer = () => {
   return (
-    <footer className="bg-slate-700 text-slate-200 text-sm mt-16">
+    <footer className="bg-deep-dusk text-slate-200 text-sm mt-16">
       <div>
         <Container>
           <div className="flex flex-col md:flex-row justify-beetween pt-16 pb-8">
