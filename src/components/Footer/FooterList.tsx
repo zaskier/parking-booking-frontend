@@ -13,8 +13,7 @@ const FooterList: React.FC<FooterListProps> = ({ children }) => {
         flex
         flex-col
         gap-2
-        footer-layout"
-    >
+        footer-layout">
       {children}
     </div>
   );
