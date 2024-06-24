@@ -20,11 +20,11 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
     <div className="relative">
       <button
         type="button"
-        className="  rounded-md focus:outline-none px-4 py-4 flex items-center justify-between w-full bg-main-gray m-3 "
+        className="m-3 flex w-full items-center justify-between rounded-md bg-main-gray px-4 py-4 focus:outline-none"
         onClick={toggleDropdown}>
         <span>{label}</span>
         <svg
-          className="transform transition duration-200 ease-in-out h-4 w-4"
+          className="h-4 w-4 transform transition duration-200 ease-in-out"
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 20 20"
           fill="currentColor">
@@ -36,11 +36,11 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
         </svg>
       </button>
       {isOpen && (
-        <ul className="absolute top-0 left-0 w-full bg-white shadow-md rounded-md py-2 z-50">
+        <ul className="absolute left-0 top-0 z-50 w-full rounded-md bg-white py-2 shadow-md">
           {options.map((option) => (
             <li
               key={option}
-              className="hover:bg-gray-100 px-4 py-2 cursor-pointer"
+              className="cursor-pointer px-4 py-2 hover:bg-gray-100"
               onClick={() => handleOptionClick(option)}>
               {option}
             </li>

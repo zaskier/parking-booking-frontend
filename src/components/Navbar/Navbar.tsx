@@ -41,7 +41,7 @@ export default function Navbar({}) {
         </Link>
         <div className="relative">
           <Image
-            className="w-10 h-30 flex pt-15 "
+            className="h-30 pt-15 flex w-10"
             ref={imgRef}
             src={menu}
             alt="menu"
@@ -49,13 +49,13 @@ export default function Navbar({}) {
 
           {open && (
             <div
-              className="text-slate-50 p-3 e-52 bg-deep-dusk	absolute -left-24 top-18 rounded-lg	"
+              className="e-52 top-18 absolute -left-24 rounded-lg bg-deep-dusk p-3 text-slate-50"
               ref={menuRef}>
               <ul>
                 {menuItems.map((element) => (
                   <li
                     onClick={() => setOpen(false)}
-                    className="p-1 text-lg cursor-pointer rounded hover:bg-purple-900 sm:min-w-800 md:min-w-620"
+                    className="sm:min-w-800 md:min-w-620 cursor-pointer rounded p-1 text-lg hover:bg-purple-900"
                     key={element}>
                     <span className="flex items-center justify-between">
                       <Link href={element.redirect}>
@@ -64,7 +64,7 @@ export default function Navbar({}) {
                           src={element.icon}
                           alt="menu"
                           onClick={() => setOpen((open) => !open)}></Image>
-                        <div className="inline text-xl  text-right ">
+                        <div className="inline text-right text-xl">
                           <span>{element.name} </span>
                         </div>
                       </Link>
