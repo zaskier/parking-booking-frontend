@@ -84,6 +84,7 @@ export default function Home() {
       </div>
       <HighLitedOffers items={items} />
       <ContentImageComponent />
+      <ContentBenefits />
     </div>
   );
 }
