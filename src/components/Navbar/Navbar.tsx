@@ -23,8 +23,8 @@ export default function Navbar({}) {
     { name: 'Account', redirect: '/', icon: accountIcon },
     { name: 'Sign In', redirect: '/', icon: signInIconIcon }
   ];
-  const menuRef = useRef();
-  const imgRef = useRef();
+  const menuRef = useRef<HTMLInputElement>(null);
+  const imgRef = useRef(null);
 
   window.addEventListener('click', (e) => {
     if (e.target !== menuRef.current && e.target !== imgRef.current) {
@@ -46,19 +46,18 @@ export default function Navbar({}) {
             src={menu}
             alt="menu"
             onClick={() => setOpen((open) => !open)}></Image>
-
           {open && (
             <div
-              className="e-52 top-18 absolute -left-24 rounded-lg bg-deep-dusk p-3 text-slate-50"
+              className="e-52 top-18 absolute -right-0 z-50 rounded-xl bg-deep-dusk p-4 text-slate-50"
               ref={menuRef}>
               <ul>
                 {menuItems.map((element) => (
                   <li
                     onClick={() => setOpen(false)}
-                    className="sm:min-w-800 md:min-w-620 cursor-pointer rounded p-1 text-lg hover:bg-purple-900"
-                    key={element}>
-                    <span className="flex items-center justify-between">
-                      <Link href={element.redirect}>
+                    className="sm:min-w-800 md:min-w-620 w-620 cursor-pointer rounded p-1 text-lg hover:bg-purple-900"
+                    key={element.name}>
+                    <span>
+                      <Link className="flex items-center space-x-2 p-2" href={element.redirect}>
                         <Image
                           className=""
                           src={element.icon}
