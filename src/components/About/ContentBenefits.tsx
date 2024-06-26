@@ -32,7 +32,9 @@ function ContentBenefits() {
       </h2>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {items.map((item: any, index: any) => (
-          <div key={index} className="overflow-hidden rounded-lg border border-gray-100 bg-white">
+          <div
+            key={index}
+            className="bg-light-gray overflow-hidden rounded-lg border border-gray-100">
             <div className="p-4">
               <Image className="mx-auto pb-3" src={item.icon} alt="menu"></Image>
               <h2 className="mb-2 text-center text-xl font-bold text-main-blue">{item.title}</h2>

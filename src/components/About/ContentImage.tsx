@@ -16,7 +16,12 @@ function ContentImageComponent() {
         </div>
       </div>
       <section className="grid gap-8 pl-16 pr-16 pt-12 lg:grid-cols-2">
-        <Image className="sm::max-w-48 w-full p-20 md:max-w-96" src={savings} alt="savings"></Image>
+        <div className="flex items-center justify-center">
+          <Image
+            className="w-full p-20 sm:max-md:max-w-48 sm:max-md:p-2"
+            src={savings}
+            alt="savings"></Image>
+        </div>
         <div className="w-1/2 sm:w-full">
           <h2 className="pb-8 pt-8 text-2xl font-bold">
             Unlock a new source of <span className="text-main-blue">passive income!</span>
@@ -43,8 +48,11 @@ function ContentImageComponent() {
             finding the perfect parking space should be as easy as a tap away!
           </p>
         </div>
-        <div className="sm::max-w-48 w-full p-20 sm:max-w-96">
-          <Image src={location} alt="location"></Image>
+        <div className="flex items-center justify-center">
+          <Image
+            className="w-full p-20 sm:max-md:max-w-48 sm:max-md:p-2"
+            src={location}
+            alt="location"></Image>
         </div>
       </section>
     </div>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 
-function HighLitedOffers({ items }) {
+function HighLitedOffers({ items }: { items: any }) {
   return (
     <div className="container mx-auto py-8">
       <div className="flex items-center justify-between pb-2">
@@ -12,11 +12,15 @@ function HighLitedOffers({ items }) {
       </div>
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {items.map((item: any, index: any) => (
-          <div key={index} className="overflow-hidden rounded-lg bg-white shadow-md">
+          <div key={index} className="bg-light-gray overflow-hidden rounded-lg shadow-md">
             <Image className="h-48 w-full object-cover" src={item.image} alt="menu"></Image>
             <div className="p-4">
               <h2 className="mb-2 text-xl font-bold">{item.title}</h2>
               <p className="text-gray-700">{item.content}</p>
+              <h2 className="mb-2 text-xl text-gray-500">
+                {item.price}
+                <span className="text-sm">/day</span>
+              </h2>
             </div>
           </div>
         ))}
