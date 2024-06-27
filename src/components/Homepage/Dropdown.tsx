@@ -20,7 +20,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onSelect }) => {
     <div className="relative">
       <button
         type="button"
-        className="m-3 flex w-full items-center justify-between rounded-md bg-main-gray px-4 py-4 focus:outline-none"
+        className="flex w-full items-center justify-between rounded-md bg-main-gray focus:outline-none"
         onClick={toggleDropdown}>
         <span>{label}</span>
         <svg
