@@ -21,7 +21,7 @@ export default function Navbar({}) {
     { name: 'Reservations', redirect: '/', icon: reservationsIcon }, //todo add proper redirects
     { name: 'Renting', redirect: '/', icon: yourOffersIcon },
     { name: 'Account', redirect: '/', icon: accountIcon },
-    { name: 'Sign In', redirect: '/', icon: signInIconIcon }
+    { name: 'Sign In', redirect: '/sign-in', icon: signInIconIcon }
   ];
   const menuRef = useRef<HTMLInputElement>(null);
   const imgRef = useRef(null);
