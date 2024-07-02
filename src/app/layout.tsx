@@ -20,7 +20,7 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning={true}>
         <Navbar />
-        <main className="container">{children}</main>
+        <main className="container min-h-screen">{children}</main>
         <Footer />
       </body>
     </html>
