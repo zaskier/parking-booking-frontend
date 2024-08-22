@@ -20,7 +20,7 @@ export default function Navbar({}) {
   const menuItems: IMenuItem[] = [
     { name: 'Reservations', redirect: '/', icon: reservationsIcon }, //todo add proper redirects
     { name: 'Renting', redirect: '/', icon: yourOffersIcon },
-    { name: 'Account', redirect: '/', icon: accountIcon },
+    { name: 'Account', redirect: '/account', icon: accountIcon },
     { name: 'Sign In', redirect: '/sign-in', icon: signInIconIcon }
   ];
   const menuRef = useRef<HTMLInputElement>(null);

@@ -11,6 +11,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { signup } from '../actions';
 
 function Copyright(props: any) {
   return (
@@ -30,7 +31,7 @@ export default function SignUp() {
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get('email'),
-      password: data.get('password')
+      password: '**********'
     });
   };
 
@@ -81,6 +82,7 @@ export default function SignUp() {
                 id="email"
                 label="Email Address"
                 name="email"
+                type="email"
                 autoComplete="email"
               />
             </Grid>
@@ -108,7 +110,8 @@ export default function SignUp() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}>
+            sx={{ mt: 3, mb: 2 }}
+            formAction={signup}>
             Sign Up
           </Button>
           <Grid container className="flex justify-center">

@@ -10,6 +10,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+import { login } from '../actions';
 
 function Copyright(props: any) {
   return (
@@ -25,15 +26,6 @@ function Copyright(props: any) {
 }
 
 export default function SignIn() {
-  //   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //     event.preventDefault();
-  //     const data = new FormData(event.currentTarget);
-  //     console.log({
-  //       email: data.get('email'),
-  //       password: data.get('password')
-  //     });
-  //   };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -84,7 +76,8 @@ export default function SignIn() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}>
+            sx={{ mt: 3, mb: 2 }}
+            formAction={login}>
             SIGN IN
           </Button>
           <Grid container>
