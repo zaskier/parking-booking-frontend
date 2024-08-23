@@ -11,8 +11,15 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { login } from '../actions';
+import { createClient } from '@/utils/supabase/server';
+import { redirect } from 'next/navigation';
 
-function Copyright(props: any) {
+async function Copyright(props: any) {
+  const supabase = createClient();
+  const { data, error } = await supabase.auth.getUser();
+  if (!error || data?.user) {
+    redirect('/account');
+  }
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
