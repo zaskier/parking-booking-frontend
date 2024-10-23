@@ -12,8 +12,16 @@ import React, { useState } from 'react';
 import Datetime from 'react-datetime';
 import 'react-datetime/css/react-datetime.css';
 
+const cities = require('./components/Client/search/cities.json');
+
 export default function Home() {
-  const options = ['Guarded', 'Monitored', 'Any'];
+  enum ParkingType {
+    Guarded = 'Guarded',
+    Monitored = 'Monitored',
+    Any = 'Any'
+  }
+
+  const parkingType = Object.values(ParkingType);
   const handleSelect = (option: string) => {
     console.log('Parking type:', option);
   };
@@ -42,6 +50,22 @@ export default function Home() {
     }
   ];
 
+  const [value, setCity] = useState('');
+  const onChange = (event: any) => {
+    setCity(event.target.value);
+  };
+
+  interface SearchInput {
+    city: string;
+    from: Date;
+    until: Date;
+    type: ParkingType;
+  }
+  const onSearch = (searchTerm: SearchInput) => {
+    setCity(searchTerm.city);
+    console.log({ SearchTerm: searchTerm });
+    // to do add api to fetch search Result
+  };
   return (
     <div>
       <div className="Parent content-background flex w-full flex-row rounded-lg bg-main-gray bg-cover bg-center bg-no-repeat p-4 text-xs md:text-base">
@@ -60,16 +84,37 @@ export default function Home() {
             </li>
           </ul>
 
-          <div className="pr-6">
+          <div className="relative pr-6">
             <input
               type="text"
+              value={value}
+              onChange={onChange}
               className="mx-3 mb-3 w-full rounded-md bg-main-gray p-4 focus:outline-none focus:ring-1 focus:ring-blue-500"
               placeholder="Where"
             />
+            <div className="center absolute z-10 z-50 w-full rounded-md bg-white shadow-md">
+              {cities
+                .filter((item: any) => {
+                  const searchTerm = value.toLowerCase();
+                  const CityName = item.city.toLowerCase();
+
+                  return searchTerm && CityName.startsWith(searchTerm) && CityName !== searchTerm;
+                })
+                .map((item: any) => (
+                  <div
+                    onClick={() => onSearch(item)}
+                    className="w m-3 my-0.5 cursor-pointer p-2 text-left hover:bg-gray-100"
+                    key={item.city}>
+                    {item.city}
+                  </div>
+                ))}
+            </div>
 
             <div className="mx-3 flex w-full flex-row rounded-md bg-main-gray">
               <Datetime
-                inputProps={{ className: ' bg-main-gray w-full focus:outline-none' }}
+                inputProps={{
+                  className: ' bg-main-gray w-full focus:outline-none'
+                }}
                 className="w-full p-4 focus:ring-1 focus:ring-blue-500"
                 value={
                   'From : ' +
@@ -98,7 +143,9 @@ export default function Home() {
 
             <div className="mx-3 mt-3 flex w-full flex-row rounded-md bg-main-gray">
               <Datetime
-                inputProps={{ className: ' bg-main-gray w-full focus:outline-none' }}
+                inputProps={{
+                  className: ' bg-main-gray w-full focus:outline-none'
+                }}
                 className="w-full p-4 focus:ring-1 focus:ring-blue-500"
                 value={
                   'To     : ' +
@@ -127,9 +174,19 @@ export default function Home() {
 
             <div className="m-3 flex w-full flex-row">
               <div className="mr-3 w-full rounded-md bg-main-gray px-4 py-4 focus:outline-none focus:ring-1 focus:ring-blue-500">
-                <Dropdown label="Parking Type" options={options} onSelect={handleSelect} />
+                <Dropdown label="Parking Type" options={parkingType} onSelect={handleSelect} />
               </div>
-              <button className="whitespace-nowrap rounded-md bg-deep-dusk px-5 py-4 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
+              <button
+                onClick={
+                  () =>
+                    onSearch({
+                      city: value,
+                      from: new Date(), //todo add dates and type from picker
+                      until: new Date(),
+                      type: ParkingType.Any
+                    }) //todo add validation for subminitng button regadig empty fields
+                }
+                className="whitespace-nowrap rounded-md bg-deep-dusk px-5 py-4 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
                 Show offers
               </button>
             </div>
