@@ -14,13 +14,7 @@ export default function Search({}) {
     Monitored = 'Monitored',
     Any = 'Any'
   }
-
-  const parkingType = Object.values(ParkingType);
-  const handleSelect = (option: string) => {
-    console.log('Parking type:', option);
-  };
-
-  const [value, setCity] = useState('');
+  const [city, setCity] = useState('');
   const onChange = (event: any) => {
     setCity(event.target.value);
   };
@@ -31,11 +25,69 @@ export default function Search({}) {
     until: Date;
     type: ParkingType;
   }
-  const onSearch = (searchTerm: SearchInput) => {
+
+  const [dateFrom, setDateFrom] = useState(new Date());
+  const handleDateChangeFrom = (selectedDate: any) => {
+    if (new Date() > selectedDate) {
+      selectedDate = new Date();
+    }
+    setDateFrom(selectedDate);
+  };
+
+  const [dateTo, setDateTo] = useState(new Date());
+  const handleDateChangeTo = (selectedDate: any) => {
+    if (new Date() > selectedDate) {
+      selectedDate = new Date();
+    }
+    if (dateFrom > selectedDate) {
+      selectedDate = dateFrom;
+    }
+    setDateTo(selectedDate);
+  };
+
+  const parkingType = Object.values(ParkingType);
+  const [selectedParkingType, setSelectedParkingType] = useState('');
+  const handleParkingType = (parkingType: string) => {
+    console.log('Parking type:', parkingType);
+    setSelectedParkingType(parkingType);
+  };
+
+  const onSearch = async (searchTerm: SearchInput) => {
     setCity(searchTerm.city);
     console.log({ SearchTerm: searchTerm });
-    // to do add api to fetch search Result
   };
+
+  const showOffers = async (searchTerm: SearchInput) => {
+    try {
+      const response = await fetch(`${process.env.BACKEND_URL}/offer`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: 'foo',
+          body: 'bar',
+          userId: 1
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const result = await response.json();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  function assignToEnum(value: string): ParkingType {
+    //todo refactor
+    if (value in ParkingType) {
+      return ParkingType[value as ParkingType];
+    }
+    return ParkingType.Any;
+  }
 
   return (
     <div className="Parent content-background flex w-full flex-row rounded-lg bg-main-gray bg-cover bg-center bg-no-repeat p-4 text-xs md:text-base">
@@ -57,7 +109,7 @@ export default function Search({}) {
         <div className="relative pr-6">
           <input
             type="text"
-            value={value}
+            value={city}
             onChange={onChange}
             className="mx-3 mb-3 w-full rounded-md bg-main-gray p-4 focus:outline-none focus:ring-1 focus:ring-blue-500"
             placeholder="Where"
@@ -65,7 +117,7 @@ export default function Search({}) {
           <div className="center absolute z-10 z-50 w-full rounded-md bg-white shadow-md">
             {cities
               .filter((item: any) => {
-                const searchTerm = value.toLowerCase();
+                const searchTerm = city.toLowerCase();
                 const CityName = item.city.toLowerCase();
 
                 return searchTerm && CityName.startsWith(searchTerm) && CityName !== searchTerm;
@@ -82,8 +134,9 @@ export default function Search({}) {
 
           <div className="mx-3 flex w-full flex-row rounded-md bg-main-gray">
             <Datetime
+              onChange={handleDateChangeFrom}
               inputProps={{
-                className: ' bg-main-gray w-full focus:outline-none'
+                className: 'bg-main-gray w-full focus:outline-none'
               }}
               className="w-full p-4 focus:ring-1 focus:ring-blue-500"
               value={
@@ -113,6 +166,7 @@ export default function Search({}) {
 
           <div className="mx-3 mt-3 flex w-full flex-row rounded-md bg-main-gray">
             <Datetime
+              onChange={handleDateChangeTo}
               inputProps={{
                 className: ' bg-main-gray w-full focus:outline-none'
               }}
@@ -144,17 +198,16 @@ export default function Search({}) {
 
           <div className="m-3 flex w-full flex-row">
             <div className="mr-3 w-full rounded-md bg-main-gray px-4 py-4 focus:outline-none focus:ring-1 focus:ring-blue-500">
-              <Dropdown label="Parking Type" options={parkingType} onSelect={handleSelect} />
+              <Dropdown label="Parking Type" options={parkingType} onSelect={handleParkingType} />
             </div>
             <button
-              onClick={
-                () =>
-                  onSearch({
-                    city: value,
-                    from: new Date(), //todo add dates and type from picker
-                    until: new Date(),
-                    type: ParkingType.Any
-                  }) //todo add validation for subminitng button regadig empty fields
+              onClick={() =>
+                showOffers({
+                  city: city,
+                  from: dateFrom,
+                  until: dateTo,
+                  type: assignToEnum(selectedParkingType)
+                })
               }
               className="whitespace-nowrap rounded-md bg-deep-dusk px-5 py-4 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2">
               Show offers
