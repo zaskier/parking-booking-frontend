@@ -1,6 +1,6 @@
-'use client';
 import { useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link'; // Import Link
 import Datetime from 'react-datetime';
 import findAddOffer from '../../../public/homepage/find-add-offer.svg';
 
@@ -76,12 +76,12 @@ export default function Search({}) {
               <a className="inline-block rounded-t-lg p-4">Find Parking</a>
             </li>
             <li className="me-2 w-full">
-              <a
-                href="#"
+              <Link
+                href="/add-offer"
                 aria-current="page"
                 className="active inline-block w-full rounded-t-lg bg-gray-100 p-4 text-blue-100 dark:bg-main-blue dark:text-white">
                 Add Parking Offer
-              </a>
+              </Link>
             </li>
           </ul>
 

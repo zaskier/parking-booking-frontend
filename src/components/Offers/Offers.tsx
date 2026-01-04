@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import type { Offer } from '@/app/api/offers/route';
+import type { Offer } from '@/app/api/offers/types';
 import OfferCard from './OfferCard';
 
 interface OffersProps {

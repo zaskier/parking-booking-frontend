@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import type { Offer } from '@/app/api/offers/route';
+import type { Offer } from '@/app/api/offers/types';
 
 interface OfferCardProps {
   offer: Offer;
