@@ -3,7 +3,7 @@ export interface Offer {
   title: string;
   content: string;
   image: string;
-  price: string;
+  price: number;
   city: string;
   type?: 'Guarded' | 'Monitored';
 }
