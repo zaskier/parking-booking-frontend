@@ -16,6 +16,7 @@ interface FormErrors {
   content?: string;
   price?: string;
   city?: string;
+  form?: string;
 }
 
 export default function AddOfferPage() {
@@ -26,9 +27,11 @@ export default function AddOfferPage() {
     price: '',
     city: '',
   });
+  const [photos, setPhotos] = useState<File[]>([]);
   const [errors, setErrors] = useState<FormErrors>({});
   const [isFormValid, setIsFormValid] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
   // Validate the form whenever formData or errors change
   useEffect(() => {
@@ -39,6 +42,17 @@ export default function AddOfferPage() {
     };
     validateForm();
   }, [formData, errors]);
+
+  // Update image previews when photos change
+  useEffect(() => {
+    const newPreviewUrls = photos.map(file => URL.createObjectURL(file));
+    setPreviewUrls(newPreviewUrls);
+
+    // Cleanup URLs on unmount
+    return () => {
+      newPreviewUrls.forEach(url => URL.revokeObjectURL(url));
+    };
+  }, [photos]);
 
   const validateField = (name: keyof FormData, value: string): string | undefined => {
     switch (name) {
@@ -65,6 +79,17 @@ export default function AddOfferPage() {
     setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const files = Array.from(e.target.files);
+      if (photos.length + files.length > 4) {
+        alert("You can only upload a maximum of 4 photos.");
+        return;
+      }
+      setPhotos(prevPhotos => [...prevPhotos, ...files]);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -88,15 +113,19 @@ export default function AddOfferPage() {
     
     setSubmitting(true);
 
+    const data = new FormData();
+    data.append('title', formData.title);
+    data.append('content', formData.content);
+    data.append('price', formData.price);
+    data.append('city', formData.city);
+    photos.forEach(photo => {
+      data.append('photos', photo);
+    });
+
     try {
       const response = await fetch('/api/offers', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...formData,
-          price: `$${formData.price}`,
-          image: '/homepage/mock-images/f31a645d83e778028ccb518d3a744a80.png',
-        }),
+        body: data,
       });
 
       if (!response.ok) {
@@ -138,7 +167,7 @@ export default function AddOfferPage() {
             name="content"
             value={formData.content}
             onChange={handleChange}
-            placeholder="Describe the parking offer, and add details rgarding accessing parking if needed"
+            placeholder="Add here details like you can receive pass to underground garage after the pay, or any other important info"
             className={`w-full rounded-md border p-2 focus:outline-none focus:ring-1 ${errors.content ? 'border-red-500 ring-red-500' : 'focus:ring-main-blue'}`}
             rows={4}
             required
@@ -172,6 +201,49 @@ export default function AddOfferPage() {
             required
           />
           {errors.city && <p className="mt-1 text-xs text-red-500">{errors.city}</p>}
+        </div>
+        <div>
+          <label className="mb-1 block font-medium text-gray-700">Photos</label>
+          <div className="grid grid-cols-2 gap-4">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div key={index} className="group relative flex h-32 w-full cursor-pointer items-center justify-center rounded-md border-2 border-dashed border-gray-300 transition-colors hover:border-main-blue">
+                {previewUrls[index] ? (
+                  <>
+                    <img src={previewUrls[index]} alt={`Preview ${index + 1}`} className="h-full w-full object-cover transition-opacity group-hover:opacity-75" />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const newPhotos = [...photos];
+                        newPhotos.splice(index, 1);
+                        setPhotos(newPhotos);
+                      }}
+                      className="absolute right-1 top-1 rounded-full bg-red-500 p-1 text-white opacity-0 transition-opacity group-hover:opacity-100"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                      </svg>
+                    </button>
+                  </>
+                ) : (
+                  <label htmlFor="photos" className="flex h-full w-full cursor-pointer flex-col items-center justify-center">
+                    <span className="text-gray-500">Photo {index + 1}</span>
+                  </label>
+                )}
+              </div>
+            ))}
+          </div>
+          <div className="mt-2">
+            <input
+                id="photos"
+                name="photos"
+                type="file"
+                multiple
+                onChange={handlePhotoChange}
+                className="w-full text-sm text-gray-500 file:mr-4 file:rounded-md file:border-0 file:bg-main-blue file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-deep-dusk"
+                accept="image/*"
+                disabled={photos.length >= 4}
+            />
+          </div>
         </div>
         
         {errors.form && <p className="text-sm text-red-500">{errors.form}</p>}

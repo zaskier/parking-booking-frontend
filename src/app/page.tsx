@@ -13,20 +13,25 @@ import Search from '@/components/Search/Search';
 export default function Home() {
   const items = [
     {
+      id: 1,
       title: 'Arlington Street Car Park',
       content:
         'Fantastic secure parking spaces available at Q-Park Leicester Square, London for a long terms rent.',
       image: mockImg1,
-      price: '$5'
+      price: '$5',
+      type: "Guarded"
     },
     {
+      id: 2,
       title: 'Tenterden Street Car Park',
       content:
         'Great parking area in the city center with multiple places for big vehicles and 3 electric charger stations.',
       image: mockImg2,
-      price: '$10'
+      price: '$10',
+      type: "Monitored"
     },
     {
+      id: 3,
       title: 'Arlington Street Car Park',
       content:
         'Economy parking near the local factory. Available 24/7 in a very attractive prices for everyday use.',
