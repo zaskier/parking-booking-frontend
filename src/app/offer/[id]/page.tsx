@@ -6,6 +6,11 @@ import offers from '@/app/api/offers/__mocks__/offers.json';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Link from 'next/link';
+import { loadStripe } from '@stripe/stripe-js';
+import { supabase } from '@/utils/supabase/client';
+
+// Load Stripe outside of component render
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
 
 export default function OfferDetails({ params }: { params: { id: string } }) {
   const { id } = params;
@@ -14,6 +19,7 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [endDate, setEndDate] = useState<Date | null>(new Date());
   const [totalPrice, setTotalPrice] = useState(0);
+  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
     if (startDate && endDate && offer) {
@@ -30,6 +36,30 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
       }
     }
   }, [startDate, endDate, offer]);
+
+  // Get user email from Supabase
+  useEffect(() => {
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user?.email) {
+        setUserEmail(session.user.email);
+      } else {
+        setUserEmail('');
+      }
+    });
+
+    // Initial check
+    const getUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user?.email) {
+        setUserEmail(user.email);
+      }
+    }
+    getUser();
+
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, []);
 
   if (!offer) {
     return (
@@ -111,12 +141,22 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
                 <span className="text-2xl font-bold text-blue-600">${totalPrice.toFixed(2)}</span>
               </div>
               
-              <button
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-                onClick={() => alert(`Booking functionality coming soon!\n\nOffer: ${offer.title}\nDays: ${Math.ceil((endDate!.getTime() - startDate!.getTime()) / (1000 * 60 * 60 * 24)) || 1}\nTotal: $${totalPrice.toFixed(2)}`)}
+              <Link
+                href={{
+                  pathname: '/booking',
+                  query: {
+                    price: totalPrice,
+                    offerId: offer.id,
+                    startDate: startDate?.toISOString(),
+                    endDate: endDate?.toISOString(),
+                    userEmail: userEmail,
+                    offerTitle: offer.title,
+                  },
+                }}
+                className="w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               >
                 Book Now
-              </button>
+              </Link>
             </div>
           </div>
         </div>
