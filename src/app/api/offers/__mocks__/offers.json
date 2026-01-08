@@ -1,29 +1,29 @@
 [
   {
     "id": 1,
-    "title": "Main Street Car Park - Kraków",
-    "content": "Secure and affordable parking available 24/7. Close to public transport.",
+    "title": "Arlington Street Car Park",
+    "content": "Fantastic secure parking spaces available at Q-Park Leicester Square, London for a long terms rent.",
     "image": "/homepage/mock-images/8d5f462def892dbc73b6119501a3fa17.png",
-    "price": "$23",
-    "city": "Kraków",
+    "price": "$5",
+    "city": "London",
     "type": "Guarded"
   },
   {
     "id": 2,
-    "title": "Central Station Parking - Kraków",
-    "content": "Spacious multi-level parking garage in the heart of the city. Electric vehicle charging available.",
+    "title": "Tenterden Street Car Park",
+    "content": "Great parking area in the city center with multiple places for big vehicles and 3 electric charger stations.",
     "image": "/homepage/mock-images/e90c7e7d5b086c34d1e0236cfd110df7.png",
-    "price": "$18",
-    "city": "Kraków",
+    "price": "$10",
+    "city": "London",
     "type": "Monitored"
   },
   {
     "id": 3,
-    "title": "Old Town Secure Garage - Łódź",
-    "content": "Long-term and short-term parking solutions. Guarded and monitored for your peace of mind.",
+    "title": "Arlington Street Car Park",
+    "content": "Economy parking near the local factory. Available 24/7 in a very attractive prices for everyday use.",
     "image": "/homepage/mock-images/f31a645d83e778028ccb518d3a744a80.png",
-    "price": "$21",
-    "city": "Łódź"
+    "price": "$11",
+    "city": "London"
   },
   {
     "id": 4,
@@ -432,5 +432,21 @@
     "price": "$26",
     "city": "Olsztyn",
     "type": "Monitored"
+  },
+  {
+    "id": 51,
+    "title": "123",
+    "content": "456",
+    "price": "$7",
+    "city": "Kraków",
+    "image": "/homepage/mock-images/f31a645d83e778028ccb518d3a744a80.png"
+  },
+  {
+    "id": 52,
+    "title": "oferta1",
+    "content": "opis dokładny tej oferty",
+    "price": "$7",
+    "city": "Kraków",
+    "image": "/homepage/mock-images/f31a645d83e778028ccb518d3a744a80.png"
   }
 ]
