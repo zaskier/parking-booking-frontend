@@ -1,65 +1,71 @@
-'use client';
+'use client'
 
-import React, { useState, useEffect } from 'react';
-import Image from 'next/image';
-import offers from '@/app/api/offers/__mocks__/offers.json';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import Link from 'next/link';
-import { loadStripe } from '@stripe/stripe-js';
-import { supabase } from '@/utils/supabase/client';
+import React, { useState, useEffect } from 'react'
+import Image from 'next/image'
+import offers from '@/app/api/offers/__mocks__/offers.json'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
+import Link from 'next/link'
+import { loadStripe } from '@stripe/stripe-js'
+import { supabase } from '@/utils/supabase/client'
 
 // Load Stripe outside of component render
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string,
+)
 
 export default function OfferDetails({ params }: { params: { id: string } }) {
-  const { id } = params;
-  const offer = offers.find((o) => o.id === parseInt(id));
+  const { id } = params
+  const offer = offers.find((o) => o.id === parseInt(id))
 
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
-  const [endDate, setEndDate] = useState<Date | null>(new Date());
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [userEmail, setUserEmail] = useState('');
+  const [startDate, setStartDate] = useState<Date | null>(new Date())
+  const [endDate, setEndDate] = useState<Date | null>(new Date())
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [userEmail, setUserEmail] = useState('')
 
   useEffect(() => {
     if (startDate && endDate && offer) {
-      const start = startDate.getTime();
-      const end = endDate.getTime();
-      const diffTime = Math.abs(end - start);
-      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+      const start = startDate.getTime()
+      const end = endDate.getTime()
+      const diffTime = Math.abs(end - start)
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
       // Ensure at least 1 day if same day or dates valid
-      const days = diffDays === 0 ? 1 : diffDays;
-      
-      const pricePerDay = parseFloat(offer.price.replace('$', ''));
+      const days = diffDays === 0 ? 1 : diffDays
+
+      const pricePerDay = parseFloat(offer.price.replace('$', ''))
       if (!isNaN(pricePerDay)) {
-        setTotalPrice(days * pricePerDay);
+        setTotalPrice(days * pricePerDay)
       }
     }
-  }, [startDate, endDate, offer]);
+  }, [startDate, endDate, offer])
 
   // Get user email from Supabase
   useEffect(() => {
-    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.user?.email) {
-        setUserEmail(session.user.email);
-      } else {
-        setUserEmail('');
-      }
-    });
+    const { data: authListener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        if (session?.user?.email) {
+          setUserEmail(session.user.email)
+        } else {
+          setUserEmail('')
+        }
+      },
+    )
 
     // Initial check
     const getUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+      const {
+        data: { user },
+      } = await supabase.auth.getUser()
       if (user?.email) {
-        setUserEmail(user.email);
+        setUserEmail(user.email)
       }
     }
-    getUser();
+    getUser()
 
     return () => {
-      authListener?.subscription.unsubscribe();
-    };
-  }, []);
+      authListener?.subscription.unsubscribe()
+    }
+  }, [])
 
   if (!offer) {
     return (
@@ -69,15 +75,18 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
           Go back home
         </Link>
       </div>
-    );
+    )
   }
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <Link href="/" className="mb-6 inline-block text-blue-600 hover:text-blue-800">
+      <Link
+        href="/"
+        className="mb-6 inline-block text-blue-600 hover:text-blue-800"
+      >
         &larr; Back to Offers
       </Link>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         {/* Left Column: Image */}
         <div className="relative h-96 w-full overflow-hidden rounded-xl shadow-lg">
@@ -94,7 +103,9 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
           <div>
             <h1 className="text-4xl font-bold mb-2">{offer.title}</h1>
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-semibold text-blue-600">{offer.price}</span>
+              <span className="text-2xl font-semibold text-blue-600">
+                {offer.price}
+              </span>
               <span className="text-gray-500">/ day</span>
             </div>
           </div>
@@ -102,16 +113,26 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
           <div className="prose max-w-none text-gray-700">
             <p className="text-lg">{offer.content}</p>
             {/* Display other details if available in json */}
-            {offer.city && <p className="mt-2"><strong>City:</strong> {offer.city}</p>}
-            {offer.type && <p><strong>Type:</strong> {offer.type}</p>}
+            {offer.city && (
+              <p className="mt-2">
+                <strong>City:</strong> {offer.city}
+              </p>
+            )}
+            {offer.type && (
+              <p>
+                <strong>Type:</strong> {offer.type}
+              </p>
+            )}
           </div>
 
           <div className="bg-gray-50 p-6 rounded-lg shadow-sm border border-gray-100">
             <h3 className="text-xl font-semibold mb-4">Book your spot</h3>
-            
+
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Start Date</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Start Date
+                </label>
                 <DatePicker
                   selected={startDate}
                   onChange={(date) => setStartDate(date)}
@@ -122,7 +143,9 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">End Date</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  End Date
+                </label>
                 <DatePicker
                   selected={endDate}
                   onChange={(date) => setEndDate(date)}
@@ -137,10 +160,14 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
 
             <div className="border-t border-gray-200 pt-4 mt-4">
               <div className="flex justify-between items-center mb-4">
-                <span className="text-lg font-medium text-gray-900">Total Price</span>
-                <span className="text-2xl font-bold text-blue-600">${totalPrice.toFixed(2)}</span>
+                <span className="text-lg font-medium text-gray-900">
+                  Total Price
+                </span>
+                <span className="text-2xl font-bold text-blue-600">
+                  ${totalPrice.toFixed(2)}
+                </span>
               </div>
-              
+
               <Link
                 href={{
                   pathname: '/booking',
@@ -162,5 +189,5 @@ export default function OfferDetails({ params }: { params: { id: string } }) {
         </div>
       </div>
     </div>
-  );
+  )
 }
