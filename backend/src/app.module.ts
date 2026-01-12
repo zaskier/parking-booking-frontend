@@ -6,6 +6,7 @@ import { ConfigModule } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { OffersModule } from './offers/offers.module'
 import { SeedModule } from './database/seeds/seed.module'
+import { CqrsModule } from '@nestjs/cqrs'
 
 @Module({
   imports: [
@@ -22,6 +23,7 @@ import { SeedModule } from './database/seeds/seed.module'
       autoLoadEntities: true,
       synchronize: true,
     }),
+    CqrsModule,
     OffersModule,
     SeedModule,
   ],

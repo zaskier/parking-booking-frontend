@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
-import { TypeEnum } from '../enums/type.enum'
+import { OfferType } from '../enums/type.enum'
 
 @Entity('offers')
 export class Offer {
@@ -23,8 +23,8 @@ export class Offer {
 
   @Column({
     type: 'enum',
-    enum: TypeEnum,
-    default: TypeEnum.Any,
+    enum: OfferType,
+    default: OfferType.Any,
   })
-  type: TypeEnum
+  type: OfferType
 }
