@@ -170,7 +170,8 @@ export default function AddOfferPage() {
         throw new Error(errorData.message || 'Failed to submit offer.');
       }
   
-      router.push('/');
+      const newOffer = await offerResponse.json();
+      router.push(`/offer/${newOffer.id}`);
   
     } catch (err: any) {
       setErrors((prev) => ({ ...prev, form: err.message }));
