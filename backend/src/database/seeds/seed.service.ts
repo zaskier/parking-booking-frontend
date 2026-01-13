@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Offer } from '../../offers/entities/offer.entity'
+import { Offer } from '../entities/offer.entity'
 import { Repository } from 'typeorm'
 import { OFFERS_SEED_DATA } from './data/offers.seed.data'
 

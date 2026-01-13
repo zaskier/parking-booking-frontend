@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
-import { OfferType } from '../enums/type.enum'
+import { OfferType } from '../../offers/enums/type.enum'
 
 @Entity('offers')
 export class Offer {
@@ -27,4 +27,7 @@ export class Offer {
     default: OfferType.Any,
   })
   type: OfferType
+
+  @Column({ nullable: true })
+  email: string
 }

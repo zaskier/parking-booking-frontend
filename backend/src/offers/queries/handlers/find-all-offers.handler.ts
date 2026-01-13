@@ -1,7 +1,7 @@
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { Offer } from '../../entities/offer.entity'
+import { Offer } from '../../../database/entities/offer.entity'
 import { FindAllOffersQuery } from '../impl/find-all-offers.query'
 
 @QueryHandler(FindAllOffersQuery)
